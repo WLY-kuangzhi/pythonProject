@@ -18,7 +18,7 @@ class HighPriceStockBook(BasePage):
     def high_price_confirm(self):
         num = len(self.high_price_stock_book.json()['result']['dataList'])
         i = 0
-        for i in range(num-1):
+        for i in range(num):
 
             high_price_uuid = self.high_price_stock_book.json()['result']['dataList'][i]['uuid']
             header = {'Content-Type': 'application/json'}

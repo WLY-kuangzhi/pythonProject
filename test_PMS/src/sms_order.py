@@ -28,19 +28,22 @@ class Order(BasePage):
         payload = {
             'orderUuid': self.order.json()['result']['dataList'][0]['uuid']
         }
-        return requests.get("https://faterp.szlcsc.com/pms/order/bookorder/detail", params=payload, cookies=self.cookies)
+        r = requests.get("https://faterp.szlcsc.com/pms/order/bookorder/detail", params=payload, cookies=self.cookies)
+        return r
 
     # 更新报价
     def order_enable_price(self):
         num = len(self.order_book_detail().json()['result'])
         i = 0
-        for i in range(num-1):
+        for i in range(num):
+            book_order_id = self.order_book_detail().json()['result'][i]['bookOrderId']
             payload = {
                 'orderId': self.order.json()['result']['dataList'][0]['orderId'],
-                'bookOrderId': self.order_book_detail().json()['result'][i]['bookOrderId']
+                'bookOrderId': book_order_id
             }
-            i = i+1
-            requests.post("https://faterp.szlcsc.com/sms/order/enable/price", params=payload, cookies=self.cookies)
+            r = requests.post("https://faterp.szlcsc.com/sms/order/enable/price", params=payload, cookies=self.cookies)
+            print(r.text)
+            i = i + 1
 
     # 允许支付
     def order_allow_pay(self):

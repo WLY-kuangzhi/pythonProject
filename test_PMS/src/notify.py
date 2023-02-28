@@ -16,10 +16,11 @@ class Notify(BasePage):
         }
         self.get_notify = requests.get('https://faterp.szlcsc.com/pms/notify/delivery/all/page', cookies=self.cookies, params=payload)
 
+
     # 通知单 审核通过
     def delivery_pass(self):
         num = len(self.get_notify.json()['result']['dataList'])
-        for i in range(num-1):
+        for i in range(num):
             payload = {
                 'uuidList': self.get_notify.json()['result']['dataList'][i]['uuid'],
                 'isDoubleAudit': 'true'
@@ -31,7 +32,7 @@ class Notify(BasePage):
     # PM审核
     def pm_pass(self):
         num = len(self.get_notify.json()['result']['dataList'])
-        for i in range(num-1):
+        for i in range(num):
             payload = {
                 'uuidList': self.get_notify.json()['result']['dataList'][i]['uuid'],
                 'isDoubleAudit': 'true'
@@ -43,7 +44,7 @@ class Notify(BasePage):
     # 经理审核
     def manager_pass(self):
         num = len(self.get_notify.json()['result']['dataList'])
-        for i in range(num-1):
+        for i in range(num):
             payload = {
                 'uuidList': self.get_notify.json()['result']['dataList'][i]['uuid'],
                 'isDoubleAudit': 'true'
@@ -55,7 +56,7 @@ class Notify(BasePage):
     # 大额审核
     def large_pass(self):
         num = len(self.get_notify.json()['result']['dataList'])
-        for i in range(num-1):
+        for i in range(num):
             payload = {
                 'uuidList': self.get_notify.json()['result']['dataList'][i]['uuid'],
                 'isDoubleAudit': 'true'
@@ -67,7 +68,7 @@ class Notify(BasePage):
     # 下推通知单
     def push_notify(self):
         num = len(self.get_notify.json()['result']['dataList'])
-        for i in range(num-1):
+        for i in range(num):
             header = {"Content-Type": "application/json"}
             push_number = self.get_notify.json()['result']['dataList'][i]['needSendNumber']
             settle_org = self.get_notify.json()['result']['dataList'][i]['settleOrg']

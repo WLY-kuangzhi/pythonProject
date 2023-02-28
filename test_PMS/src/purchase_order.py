@@ -10,6 +10,7 @@ class PurchaseOrder(BasePage):
         super(PurchaseOrder, self).__init__()
         payload = {
             # 'productCode': product_code,
+            'vendorName': 'G7962',
             'pageSize': 30,
             'currentPage': 1
         }
@@ -18,7 +19,7 @@ class PurchaseOrder(BasePage):
     # 采购订单审核
     def purchase_order_audit(self):
         num = len(self.get_purchase_order.json()['result']['dataList'])
-        for i in range(num-1):
+        for i in range(num):
             payload = {
                 'uuid': self.get_purchase_order.json()['result']['dataList'][i]['uuid'],
                 'isPass': 'true',
@@ -31,7 +32,7 @@ class PurchaseOrder(BasePage):
     # 采购订单经理审核
     def purchase_manager_audit(self):
         num = len(self.get_purchase_order.json()['result']['dataList'])
-        for i in range(num-1):
+        for i in range(num):
             payload = {
                 'uuid': self.get_purchase_order.json()['result']['dataList'][i]['uuid'],
                 'isPass': 'true',
@@ -44,7 +45,7 @@ class PurchaseOrder(BasePage):
     # 采购订单大额审核
     def purchase_large_audit(self):
         num = len(self.get_purchase_order.json()['result']['dataList'])
-        for i in range(num-1):
+        for i in range(num):
             payload = {
                 'uuid': self.get_purchase_order.json()['result']['dataList'][i]['uuid'],
                 'isPass': 'true',

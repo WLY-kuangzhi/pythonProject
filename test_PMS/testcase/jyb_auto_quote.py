@@ -1,5 +1,3 @@
-import time
-from datetime import date
 from time import sleep
 
 import yaml
@@ -44,8 +42,6 @@ class TestJybQuote:
         # 设置采购成本价
         self.quote.choose()
         sleep(3)
-
-    def test_sms_auto(self):
         # 销售订单更新报价、允许支付
         self.sms_order_auto.order_book_detail()
         sleep(2)
@@ -81,6 +77,7 @@ class TestJybQuote:
         self.notify.push_notify()
         sleep(5)
     # 采购订单
+    def test_purchase_order(self):
         self.purchase_order.purchase_order_audit()
         self.purchase_order.purchase_manager_audit()
         self.purchase_order.purchase_large_audit()

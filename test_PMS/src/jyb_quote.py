@@ -20,7 +20,7 @@ class JybQuote(BasePage):
     # 需求单报价
     def save(self, quote_data):
         i = 0
-        for i in range(self.num-1):
+        for i in range(self.num):
             # 获取需求单uuid、订单数量
             purchase_apply_uuid_list = self.get_query.json()['result']['dataList'][i]['uuid']
             order_number = self.get_query.json()['result']['dataList'][i]['orderNumber']
@@ -45,7 +45,7 @@ class JybQuote(BasePage):
     # 设置采购成本价
     def choose(self):
         i = 0
-        for i in range(self.num-1):
+        for i in range(self.num):
             payload = {
                 'uuid': self.get_query.json()['result']['dataList'][i]['uuid'],
                 'vendorQuoteUuid': self.quote_query().json()['result'][i]['uuid']

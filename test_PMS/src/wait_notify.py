@@ -23,7 +23,7 @@ class WaitNotify(BasePage):
         header = {"content-type": "application/json"}
         num = len(self.get_wait_notify.json()['result']['dataList'])
         i = 0
-        for i in range(num-1):
+        for i in range(num):
             wait_notify_uuid = self.get_wait_notify.json()['result']['dataList'][i]['uuid']
             wait_number = self.get_wait_notify.json()['result']['dataList'][i]['purchaseNumber']
             # 数据格式是json python 没有json格式，需要转换
