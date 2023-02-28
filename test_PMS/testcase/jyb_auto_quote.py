@@ -77,7 +77,6 @@ class TestJybQuote:
         self.notify.push_notify()
         sleep(5)
     # 采购订单
-    def test_purchase_order(self):
         self.purchase_order.purchase_order_audit()
         self.purchase_order.purchase_manager_audit()
         self.purchase_order.purchase_large_audit()
