@@ -16,7 +16,6 @@ class Notify(BasePage):
         }
         self.get_notify = requests.get('https://faterp.szlcsc.com/pms/notify/delivery/all/page', cookies=self.cookies, params=payload)
 
-
     # 通知单 审核通过
     def delivery_pass(self):
         num = len(self.get_notify.json()['result']['dataList'])
