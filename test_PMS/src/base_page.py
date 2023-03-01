@@ -13,7 +13,7 @@ class BasePage:
             "Content-Type": "application/x-www-form-urlencoded"
         }
         self.test = {
-
+            "test": "123"
         }
 
     # 获取yaml文件内容
