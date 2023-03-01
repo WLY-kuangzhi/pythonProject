@@ -12,9 +12,6 @@ class BasePage:
         self.header = {
             "Content-Type": "application/x-www-form-urlencoded"
         }
-        self.test = {
-            "test": "123"
-        }
 
     # 获取yaml文件内容
     def get_yaml_data(self):
