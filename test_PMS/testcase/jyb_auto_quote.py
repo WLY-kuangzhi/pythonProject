@@ -17,7 +17,7 @@ class TestJybQuote:
     def setup(self):
         self.order_data = {
             # 'productCode': 'C25351',
-            "orderCode": 'SO2302270103',
+            "orderCode": 'SO2303010024',
             "currentPage": 1,
             "pageSize": 30
         }
@@ -36,12 +36,13 @@ class TestJybQuote:
         aa = self.quote.get_query
         # 报价
         self.quote.save(quote_data)
-        sleep(3)
+        sleep(10)
         # 查询报价
         self.quote.quote_query()
+        sleep(3)
         # 设置采购成本价
         self.quote.choose()
-        sleep(3)
+        sleep(6)
         # 销售订单更新报价、允许支付
         self.sms_order_auto.order_book_detail()
         sleep(2)
@@ -59,6 +60,7 @@ class TestJybQuote:
         if len(high_price_book) != 0:
             # 高价库存表确认订货
             self.high_price_stock_book.high_price_confirm()
+            sleep(2)
             self.wait_notify.wait_notify()
         elif len(wait_notify_none) != 0:
             # 待下推订货需求
@@ -69,11 +71,11 @@ class TestJybQuote:
         sleep(5)
         self.notify.delivery_pass()
         self.notify.pm_pass()
-        sleep(2)
+        sleep(3)
         self.notify.manager_pass()
-        sleep(2)
+        sleep(3)
         self.notify.large_pass()
-        sleep(2)
+        sleep(3)
         self.notify.push_notify()
         sleep(5)
     # 采购订单

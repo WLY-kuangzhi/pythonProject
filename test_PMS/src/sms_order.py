@@ -42,7 +42,6 @@ class Order(BasePage):
                 'bookOrderId': book_order_id
             }
             r = requests.post("https://faterp.szlcsc.com/sms/order/enable/price", params=payload, cookies=self.cookies)
-            print(r.text)
             i = i + 1
 
     # 允许支付
