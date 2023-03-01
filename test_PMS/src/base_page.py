@@ -13,7 +13,6 @@ class BasePage:
             "Content-Type": "application/x-www-form-urlencoded"
         }
         self.headers = {
-
         }
 
     # 获取yaml文件内容
