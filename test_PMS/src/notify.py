@@ -64,7 +64,7 @@ class Notify(BasePage):
                             cookies=self.cookies)
             i = i + 1
 
-    # 下推通知单
+    # 下推国内采购订单
     def push_notify(self):
         num = len(self.get_notify.json()['result']['dataList'])
         for i in range(num):
