@@ -7,7 +7,7 @@ class BasePage:
     # 存放公共变量
     def __init__(self):
         self.cookies = {
-            "fat.auth.token": "EF2D8AAA799DCA9190451CCF6D4C54B0"
+            "fat.auth.token": "01C7350852B9BBDA358674E013832D93"
         }
         self.header = {
             "Content-Type": "application/x-www-form-urlencoded"

@@ -1,4 +1,5 @@
 # 交易部报价列表
+import string
 from time import sleep
 
 import requests
@@ -36,24 +37,28 @@ class JybQuote(BasePage):
     # 查询报价
     def quote_query(self):
         # 遍历返回结果，获取需求单报价的uuid ,加入到数组并返回
+        num = len(self.get_query.json()['result']['dataList'])
         data = []
-        for i in range(len(self.get_query.json()['result']['dataList'])):
+        for i in range(num):
             aa = {
                 'purchaseApplyUuid': self.get_query.json()['result']['dataList'][i]['uuid']
             }
             r = requests.get("https://faterp.szlcsc.com/pms/vendor/quote/query", cookies=self.cookies, params=aa)
-            data = data.append(r.json()['result'][0]['uuid'])
+            vendor_quote_uuid = r.json()['result'][0]['uuid']
+            data.append(vendor_quote_uuid)
         return data
 
     # 设置采购成本价
     def choose(self):
+        data = self.quote_query()
         num = len(self.get_query.json()['result']['dataList'])
         i = 0
         for i in range(num):
             payload = {
                 'uuid': self.get_query.json()['result']['dataList'][i]['uuid'],
-                'vendorQuoteUuid': self.quote_query().data[i]
+                'vendorQuoteUuid': data[i]
             }
-            r = requests.post("https://faterp.szlcsc.com/pms/apply/set/choose/cost/price", params=payload, cookies=self.cookies)
-            sleep(3)
-            print(r.text)
+            r = requests.post("https://faterp.szlcsc.com/pms/apply/set/choose/cost/price", data=payload, cookies=self.cookies)
+            print(r.json())
+            sleep(2)
+

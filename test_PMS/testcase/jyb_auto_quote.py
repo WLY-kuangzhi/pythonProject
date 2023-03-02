@@ -37,11 +37,15 @@ class TestJybQuote:
         # 报价
         self.quote.save(quote_data)
         sleep(10)
+
+    def test_get_quote_query(self):
         # 查询报价
-        self.quote.quote_query()
-        sleep(3)
+        # self.quote.quote_query()
+        # sleep(3)
         # 设置采购成本价
         self.quote.choose()
+
+    def test_sms_auto(self):
         sleep(6)
         # 销售订单更新报价、允许支付
         self.sms_order_auto.order_book_detail()
