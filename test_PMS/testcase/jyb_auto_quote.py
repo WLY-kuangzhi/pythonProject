@@ -17,7 +17,7 @@ class TestJybQuote:
     def setup(self):
         self.order_data = {
             # 'productCode': 'C25351',
-            "orderCode": 'SO2303010024',
+            "orderCode": 'SO2303020002',
             "currentPage": 1,
             "pageSize": 30
         }
@@ -32,20 +32,12 @@ class TestJybQuote:
     # 交易部自动报价
     @pytest.mark.parametrize("quote_data", yaml.safe_load(open(r"../pms_data.yml", encoding='utf-8')))
     def test_jyb_auto_quote(self, quote_data):
-        # 查询需求单
-        aa = self.quote.get_query
         # 报价
+        sleep(5)
         self.quote.save(quote_data)
         sleep(10)
-
-    def test_get_quote_query(self):
-        # 查询报价
-        # self.quote.quote_query()
-        # sleep(3)
         # 设置采购成本价
         self.quote.choose()
-
-    def test_sms_auto(self):
         sleep(6)
         # 销售订单更新报价、允许支付
         self.sms_order_auto.order_book_detail()
@@ -55,10 +47,10 @@ class TestJybQuote:
         self.sms_order_auto.order_allow_pay()
 
     # 采购流程
+    def test_pms_auto(self):
         # 待下推订货需求为空，存在两种情况
         # 1.在高价库存列表
         # 2.火箭消息未发送成功
-    def test_pms_auto(self):
         high_price_book = self.high_price_stock_book.high_price_stock_book.json()['result']['dataList']
         wait_notify_none = self.wait_notify.get_wait_notify.json()['result']['dataList']
         if len(high_price_book) != 0:

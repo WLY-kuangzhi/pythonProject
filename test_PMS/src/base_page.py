@@ -1,5 +1,6 @@
 import json
 
+import pytest
 import yaml
 
 
@@ -7,7 +8,7 @@ class BasePage:
     # 存放公共变量
     def __init__(self):
         self.cookies = {
-            "fat.auth.token": "01C7350852B9BBDA358674E013832D93"
+            "fat.auth.token": "20AE319036D243B6BD198B39709A15A8"
         }
         self.header = {
             "Content-Type": "application/x-www-form-urlencoded"

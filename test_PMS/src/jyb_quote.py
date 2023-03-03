@@ -2,6 +2,7 @@
 import string
 from time import sleep
 
+import pytest
 import requests
 
 from test_PMS.src.base_page import BasePage
@@ -18,21 +19,19 @@ class JybQuote(BasePage):
     # 需求单报价
     def save(self, quote_data):
         num = len(self.get_query.json()['result']['dataList'])
-        i = 0
         for i in range(num):
-            # 获取需求单uuid、订单数量
+            # 获取需求单uuid、订单数量、商品uuid
             purchase_apply_uuid_list = self.get_query.json()['result']['dataList'][i]['uuid']
             order_number = self.get_query.json()['result']['dataList'][i]['orderNumber']
             product_uuid = self.get_query.json()['result']['dataList'][i]['productUuid']
             # 给yaml文件赋新值
+
             self.update_yaml_data("purchaseApplyUuidList", purchase_apply_uuid_list)
             self.update_yaml_data("orderNumber", order_number)
             self.update_yaml_data("productUuid", product_uuid)
-            r = requests.post("https://faterp.szlcsc.com/pms/vendor/quote/star/save", data=quote_data, headers=self.header,
-                          cookies=self.cookies)
-            sleep(3)
+            quote_data1 = self.get_yaml_data()[0]
+            r = requests.post("https://faterp.szlcsc.com/pms/vendor/quote/star/save", quote_data1, headers=self.header,cookies=self.cookies)
             print(r.text)
-            i = i + 1
 
     # 查询报价
     def quote_query(self):
