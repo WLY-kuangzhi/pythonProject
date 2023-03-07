@@ -1,9 +1,7 @@
 # 通知单列表
 import json
-
 import requests
-
-from test_PMS.src.base_page import BasePage
+from testPMS.src.base_page import BasePage
 
 
 class Notify(BasePage):
@@ -26,7 +24,6 @@ class Notify(BasePage):
             }
             requests.post("https://faterp.szlcsc.com/pms/notify/delivery/audit/pass", params=payload,
                             cookies=self.cookies)
-            i = i+1
 
     # PM审核
     def pm_pass(self):
@@ -38,7 +35,6 @@ class Notify(BasePage):
             }
             requests.post("https://faterp.szlcsc.com/pms/notify/delivery/audit/pmpass", params=payload,
                           cookies=self.cookies)
-            i = i + 1
 
     # 经理审核
     def manager_pass(self):
@@ -50,7 +46,6 @@ class Notify(BasePage):
             }
             requests.post("https://faterp.szlcsc.com/pms/notify/delivery/manager/audit", params=payload,
                           cookies=self.cookies)
-            i = i + 1
 
     # 大额审核
     def large_pass(self):
@@ -62,7 +57,6 @@ class Notify(BasePage):
             }
             requests.post("https://faterp.szlcsc.com/pms/notify/delivery/large/audit", params=payload,
                             cookies=self.cookies)
-            i = i + 1
 
     # 下推国内采购订单
     def push_notify(self):
@@ -85,7 +79,6 @@ class Notify(BasePage):
             payload = json.dumps(aa)
             requests.post("https://faterp.szlcsc.com/pms/purchase/order/push", headers=header, data=payload,
                           cookies=self.cookies)
-            i = i + 1
 
 
 

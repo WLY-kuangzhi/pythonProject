@@ -1,7 +1,7 @@
 # 海外代购需求单
 import requests
 
-from test_PMS.src.base_page import BasePage
+from testPMS.src.base_page import BasePage
 
 
 class OverseaOrder(BasePage):
@@ -35,7 +35,6 @@ class OverseaOrder(BasePage):
     # 下推海外代购需求单
     def notify_delivery(self):
         num = self.overseas_order.json()['result']['dataList']
-        i = 0
         for i in range(len(num)):
             payload = {
                 'applyUuid': self.overseas_order.json()['result']['dataList'][i]['uuid'],
@@ -45,7 +44,6 @@ class OverseaOrder(BasePage):
                 'currencyType': self.overseas_order.json()['result']['dataList'][i]['currencyType'],
                 'quotePrice': self.overseas_order.json()['result']['dataList'][i]['totalCostMoney']
             }
-            i = i + 1
             requests.post('https://faterp.szlcsc.com/pms/brokage/purchase/apply/add/notify/delivery', cookies=self.cookies, headers=self.header, data=payload)
 
 

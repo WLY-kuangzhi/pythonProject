@@ -1,11 +1,7 @@
 # 交易部报价列表
-import string
-from time import sleep
-
-import pytest
 import requests
-
-from test_PMS.src.base_page import BasePage
+from time import sleep
+from testPMS.src.base_page import BasePage
 
 
 class JybQuote(BasePage):
@@ -30,7 +26,7 @@ class JybQuote(BasePage):
             self.update_yaml_data("orderNumber", order_number)
             self.update_yaml_data("productUuid", product_uuid)
             quote_data1 = self.get_yaml_data()[0]
-            r = requests.post("https://faterp.szlcsc.com/pms/vendor/quote/star/save", quote_data1, headers=self.header,cookies=self.cookies)
+            r = requests.post("https://faterp.szlcsc.com/pms/vendor/quote/star/save", quote_data1, headers=self.header, cookies=self.cookies)
             print(r.text)
 
     # 查询报价

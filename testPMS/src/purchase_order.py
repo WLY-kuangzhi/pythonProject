@@ -1,15 +1,15 @@
 # 采购订单列表
 import requests
 
-from test_PMS.src.base_page import BasePage
+from testPMS.src.base_page import BasePage
 
 
 class PurchaseOrder(BasePage):
     # 查询采购订单列表
-    def __init__(self):
+    def __init__(self, product_code):
         super(PurchaseOrder, self).__init__()
         payload = {
-            # 'productCode': product_code,
+            'productCode': product_code,
             'vendorName': 'G7962',
             'pageSize': 30,
             'currentPage': 1
@@ -27,7 +27,6 @@ class PurchaseOrder(BasePage):
             }
             requests.post("https://faterp.szlcsc.com/pms/purchase/order/audit", params=payload,
                           cookies=self.cookies)
-            i = i+1
 
     # 采购订单经理审核
     def purchase_manager_audit(self):
@@ -40,7 +39,6 @@ class PurchaseOrder(BasePage):
             }
             requests.post("https://faterp.szlcsc.com/pms/purchase/order/manager/audit", params=payload,
                         cookies=self.cookies)
-            i = i + 1
 
     # 采购订单大额审核
     def purchase_large_audit(self):
@@ -53,7 +51,6 @@ class PurchaseOrder(BasePage):
             }
             r = requests.post("https://faterp.szlcsc.com/pms/purchase/order/large/audit", params=payload,
                           cookies=self.cookies)
-            i = i + 1
             assert r.status_code == 200
 
 

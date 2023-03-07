@@ -3,21 +3,20 @@ from time import sleep
 import yaml
 import pytest
 
-from test_PMS.src.base_page import BasePage
-from test_PMS.src.high_price_stock_book import HighPriceStockBook
-from test_PMS.src.jyb_quote import JybQuote
-from test_PMS.src.notify import Notify
-from test_PMS.src.purchase_order import PurchaseOrder
-from test_PMS.src.sms_order import Order
-from test_PMS.src.wait_notify import WaitNotify
+from testPMS.src.high_price_stock_book import HighPriceStockBook
+from testPMS.src.jyb_quote import JybQuote
+from testPMS.src.notify import Notify
+from testPMS.src.purchase_order import PurchaseOrder
+from testPMS.src.sms_order import Order
+from testPMS.src.wait_notify import WaitNotify
 
 
 # ===============销售订单采购流程自动化========================================
 class TestJybQuote:
-    def setup(self):
+    def setup(self, get_order_data):
         self.order_data = {
             # 'productCode': 'C25351',
-            "orderCode": 'SO2303020002',
+            "orderCode": 'SO2303070251',
             "currentPage": 1,
             "pageSize": 30
         }
@@ -27,10 +26,10 @@ class TestJybQuote:
         self.high_price_stock_book = HighPriceStockBook(self.order_data['orderCode'])
         self.wait_notify = WaitNotify(self.order_data['orderCode'])
         self.notify = Notify(self.order_data['orderCode'])
-        self.purchase_order = PurchaseOrder()
+        self.purchase_order = PurchaseOrder(self.sms_order_auto.order_detail())
 
     # 交易部自动报价
-    @pytest.mark.parametrize("quote_data", yaml.safe_load(open(r"../pms_data.yml", encoding='utf-8')))
+    @pytest.mark.parametrize("quote_data", yaml.safe_load(open(r"../quote_data/quote_data.yml", encoding='utf-8')))
     def test_jyb_auto_quote(self, quote_data):
         # 报价
         sleep(5)
@@ -40,11 +39,15 @@ class TestJybQuote:
         self.quote.choose()
         sleep(6)
         # 销售订单更新报价、允许支付
+
+    # 销售订单
+    def test_sms_order(self):
         self.sms_order_auto.order_book_detail()
-        sleep(2)
+        sleep(3)
         self.sms_order_auto.order_enable_price()
-        sleep(2)
+        sleep(3)
         self.sms_order_auto.order_allow_pay()
+        print('报价完成，请前往商城支付支付')
 
     # 采购流程
     def test_pms_auto(self):
@@ -63,6 +66,7 @@ class TestJybQuote:
             self.wait_notify.wait_notify()
         else:
             print("没有查到需求单，火箭消息堵塞或者需求单已下推")
+
         # 通知单
         sleep(5)
         self.notify.delivery_pass()
@@ -74,17 +78,17 @@ class TestJybQuote:
         sleep(3)
         self.notify.push_notify()
         sleep(5)
-    # 采购订单
+        # 采购订单
         self.purchase_order.purchase_order_audit()
         self.purchase_order.purchase_manager_audit()
         self.purchase_order.purchase_large_audit()
-        print(self.purchase_order.get_purchase_order.json()['result']['dataList'][0]['purchaseOrderCode'])
 
-
-
-
-
-
+    # 获取采购订单号
+    def test_get_purchase_order(self):
+        data = self.sms_order_auto.order_detail()
+        for i in range(len(data)):
+            self.purchase_order.get_purchase_order(data[i])
+            print("采购订单号：", self.purchase_order.get_purchase_order.json()['result']['dataList'][0]['purchaseOrderCode'])
 
 
 

@@ -1,9 +1,7 @@
 # 待下推订货需求
 import json
-
 import requests
-
-from test_PMS.src.base_page import BasePage
+from testPMS.src.base_page import BasePage
 
 
 class WaitNotify(BasePage):
@@ -22,7 +20,6 @@ class WaitNotify(BasePage):
     def wait_notify(self):
         header = {"content-type": "application/json"}
         num = len(self.get_wait_notify.json()['result']['dataList'])
-        i = 0
         for i in range(num):
             wait_notify_uuid = self.get_wait_notify.json()['result']['dataList'][i]['uuid']
             wait_number = self.get_wait_notify.json()['result']['dataList'][i]['purchaseNumber']
@@ -35,6 +32,7 @@ class WaitNotify(BasePage):
             }]
             # 将元组转为json
             payload = json.dumps(aa)
-            requests.post("https://faterp.szlcsc.com/pms/wait/notify/push/jyb", data=payload, headers=header,
+            r = requests.post("https://faterp.szlcsc.com/pms/wait/notify/push/jyb", data=payload, headers=header,
                         cookies=self.cookies)
-            i = i+1
+            print(r.text)
+

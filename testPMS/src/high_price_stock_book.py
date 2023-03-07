@@ -1,7 +1,7 @@
 import requests
 import json
 
-from test_PMS.src.base_page import BasePage
+from testPMS.src.base_page import BasePage
 
 
 class HighPriceStockBook(BasePage):
@@ -17,7 +17,6 @@ class HighPriceStockBook(BasePage):
 
     def high_price_confirm(self):
         num = len(self.high_price_stock_book.json()['result']['dataList'])
-        i = 0
         for i in range(num):
 
             high_price_uuid = self.high_price_stock_book.json()['result']['dataList'][i]['uuid']
@@ -25,4 +24,3 @@ class HighPriceStockBook(BasePage):
             payload = {"uuidList": [high_price_uuid]}
             requests.post('https://faterp.szlcsc.com/pms/high/price/stock/book/confirm', data=json.dumps(payload),
                         cookies=self.cookies, headers=header)
-            i = i+1

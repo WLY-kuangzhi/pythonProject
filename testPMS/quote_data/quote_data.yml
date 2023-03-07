@@ -11,13 +11,13 @@
   minOrderNum: 1
   minPackNumber: 5000
   minPackUnit: pan
-  orderNumber: 2000
+  orderNumber: 1000
   priceWithTax: 0.007
   productArrange: biandai
   productLastPrice: 0.0077
-  productUuid: 6304C4A9F818C63994678D664D5F9012
+  productUuid: 538A3A6BD566784B2F09A935C2614426
   profitRate: 10
-  purchaseApplyUuidList: 51644C13B78B355DEE59E1EEC8C93E52
+  purchaseApplyUuidList: 2C655A649D39E10072F18C1076B1EE8B
   purchaserId: 11288
   remark: 123
   salePrice: 0
