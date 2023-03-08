@@ -14,7 +14,7 @@ class WaitNotify(BasePage):
             'pageSize': 30,
             'currentPage': 1
         }
-        self.get_wait_notify = requests.get("https://faterp.szlcsc.com/pms/wait/notify/jyb/page", cookies=self.cookies, params=payload)
+        self.get_wait_notify = requests.get(url=self.url + "/pms/wait/notify/jyb/page", cookies=self.cookies, params=payload)
 
     # 待采购需求单下推通知单
     def wait_notify(self):
@@ -32,7 +32,7 @@ class WaitNotify(BasePage):
             }]
             # 将元组转为json
             payload = json.dumps(aa)
-            r = requests.post("https://faterp.szlcsc.com/pms/wait/notify/push/jyb", data=payload, headers=header,
+            r = requests.post("url=self.url + /pms/wait/notify/push/jyb", data=payload, headers=header,
                         cookies=self.cookies)
             print(r.text)
 

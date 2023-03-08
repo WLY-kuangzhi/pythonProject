@@ -3,6 +3,7 @@ from time import sleep
 import yaml
 import pytest
 
+from testPMS.src.base_page import BasePage
 from testPMS.src.high_price_stock_book import HighPriceStockBook
 from testPMS.src.jyb_quote import JybQuote
 from testPMS.src.notify import Notify
@@ -12,11 +13,11 @@ from testPMS.src.wait_notify import WaitNotify
 
 
 # ===============销售订单采购流程自动化========================================
-class TestJybQuote:
-    def setup(self, get_order_data):
+class TestJybQuote(BasePage):
+    def setup(self):
         self.order_data = {
             # 'productCode': 'C25351',
-            "orderCode": 'SO2303070251',
+            "orderCode": self.order,
             "currentPage": 1,
             "pageSize": 30
         }

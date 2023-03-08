@@ -12,7 +12,7 @@ class Notify(BasePage):
             'pageSize': 30,
             'currentPage': 1
         }
-        self.get_notify = requests.get('https://faterp.szlcsc.com/pms/notify/delivery/all/page', cookies=self.cookies, params=payload)
+        self.get_notify = requests.get(url=self.url + '/pms/notify/delivery/all/page', cookies=self.cookies, params=payload)
 
     # 通知单 审核通过
     def delivery_pass(self):
@@ -22,7 +22,7 @@ class Notify(BasePage):
                 'uuidList': self.get_notify.json()['result']['dataList'][i]['uuid'],
                 'isDoubleAudit': 'true'
             }
-            requests.post("https://faterp.szlcsc.com/pms/notify/delivery/audit/pass", params=payload,
+            requests.post(url=self.url + "/pms/notify/delivery/audit/pass", params=payload,
                             cookies=self.cookies)
 
     # PM审核
@@ -33,7 +33,7 @@ class Notify(BasePage):
                 'uuidList': self.get_notify.json()['result']['dataList'][i]['uuid'],
                 'isDoubleAudit': 'true'
             }
-            requests.post("https://faterp.szlcsc.com/pms/notify/delivery/audit/pmpass", params=payload,
+            requests.post(url=self.url + "/pms/notify/delivery/audit/pmpass", params=payload,
                           cookies=self.cookies)
 
     # 经理审核
@@ -44,7 +44,7 @@ class Notify(BasePage):
                 'uuidList': self.get_notify.json()['result']['dataList'][i]['uuid'],
                 'isDoubleAudit': 'true'
             }
-            requests.post("https://faterp.szlcsc.com/pms/notify/delivery/manager/audit", params=payload,
+            requests.post(url=self.url + "/pms/notify/delivery/manager/audit", params=payload,
                           cookies=self.cookies)
 
     # 大额审核
@@ -55,7 +55,7 @@ class Notify(BasePage):
                 'uuidList': self.get_notify.json()['result']['dataList'][i]['uuid'],
                 'isDoubleAudit': 'true'
             }
-            requests.post("https://faterp.szlcsc.com/pms/notify/delivery/large/audit", params=payload,
+            requests.post(url=self.url + "/pms/notify/delivery/large/audit", params=payload,
                             cookies=self.cookies)
 
     # 下推国内采购订单
@@ -77,7 +77,7 @@ class Notify(BasePage):
                     {"pushNumber": push_number, "settleOrg": settle_org, "uuid": notify_uuid}],
                  "originPlace": ""}]}
             payload = json.dumps(aa)
-            requests.post("https://faterp.szlcsc.com/pms/purchase/order/push", headers=header, data=payload,
+            requests.post(url=self.url + "/pms/purchase/order/push", headers=header, data=payload,
                           cookies=self.cookies)
 
 

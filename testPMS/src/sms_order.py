@@ -22,14 +22,14 @@ class Order(BasePage):
             'totalRow': 1,
             'operate': all
         }
-        self.order = requests.get("https://faterp.szlcsc.com/sms/order/page", params=payload, cookies=self.cookies)
+        self.order = requests.get(url=self.url + "/sms/order/page", params=payload, cookies=self.cookies)
 
     # 销售订单详情
     def order_detail(self):
         payload = {
             "uuid": self.order.json()['result']['dataList'][0]['uuid']
         }
-        r = requests.get("https://faterp.szlcsc.com/sms/order/detail/init", params=payload, cookies=self.cookies)
+        r = requests.get(url=self.url + "/sms/order/detail/init", params=payload, cookies=self.cookies)
         product = []
         num = len(r.json()['result']['dataList'][0]['orderDetailVOList'])
         for i in range(num):
@@ -41,7 +41,7 @@ class Order(BasePage):
         payload = {
             'orderUuid': self.order.json()['result']['dataList'][0]['uuid']
         }
-        r = requests.get("https://faterp.szlcsc.com/pms/order/bookorder/detail", params=payload, cookies=self.cookies)
+        r = requests.get(url=self.url + "/pms/order/bookorder/detail", params=payload, cookies=self.cookies)
         return r
 
     # 更新报价
@@ -53,11 +53,11 @@ class Order(BasePage):
                 'orderId': self.order.json()['result']['dataList'][0]['orderId'],
                 'bookOrderId': book_order_id
             }
-            requests.post("https://faterp.szlcsc.com/sms/order/enable/price", params=payload, cookies=self.cookies)
+            requests.post(url=self.url + "/sms/order/enable/price", params=payload, cookies=self.cookies)
 
     # 允许支付
     def order_allow_pay(self):
         payload = {
             'uuid': self.order.json()['result']['dataList'][0]['uuid']
         }
-        requests.post('https://faterp.szlcsc.com/sms/order/update/allow/pay', cookies=self.cookies, params=payload ,headers=self.header)
+        requests.post(url=self.url + '/sms/order/update/allow/pay', cookies=self.cookies, params=payload ,headers=self.header)

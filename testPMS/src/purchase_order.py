@@ -14,7 +14,7 @@ class PurchaseOrder(BasePage):
             'pageSize': 30,
             'currentPage': 1
         }
-        self.get_purchase_order = requests.get('https://faterp.szlcsc.com/pms/purchase/order/page', cookies=self.cookies, params=payload)
+        self.get_purchase_order = requests.get(url=self.url + '/pms/purchase/order/page', cookies=self.cookies, params=payload)
 
     # 采购订单审核
     def purchase_order_audit(self):
@@ -25,7 +25,7 @@ class PurchaseOrder(BasePage):
                 'isPass': 'true',
                 'remark': '审核通过'
             }
-            requests.post("https://faterp.szlcsc.com/pms/purchase/order/audit", params=payload,
+            requests.post(url=self.url + "/pms/purchase/order/audit", params=payload,
                           cookies=self.cookies)
 
     # 采购订单经理审核
@@ -37,7 +37,7 @@ class PurchaseOrder(BasePage):
                 'isPass': 'true',
                 'remark': '经理审核通过'
             }
-            requests.post("https://faterp.szlcsc.com/pms/purchase/order/manager/audit", params=payload,
+            requests.post(url=self.url + "/pms/purchase/order/manager/audit", params=payload,
                         cookies=self.cookies)
 
     # 采购订单大额审核
@@ -49,7 +49,7 @@ class PurchaseOrder(BasePage):
                 'isPass': 'true',
                 'remark': '大额审核通过'
             }
-            r = requests.post("https://faterp.szlcsc.com/pms/purchase/order/large/audit", params=payload,
+            r = requests.post(url=self.url + "/pms/purchase/order/large/audit", params=payload,
                           cookies=self.cookies)
             assert r.status_code == 200
 

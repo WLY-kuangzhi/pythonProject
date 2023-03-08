@@ -12,7 +12,7 @@ class OverseaOrder(BasePage):
             'currentPage': 1,
             'pageSize': 30
         }
-        self.overseas_order = requests.get('https://faterp.szlcsc.com/pms/brokage/purchase/apply/page', cookies=self.cookies, params=payload)
+        self.overseas_order = requests.get(url=self.url + '/pms/brokage/purchase/apply/page', cookies=self.cookies, params=payload)
 
     # 将需求单设置为手动带推单
     def handler_apply(self):
@@ -30,7 +30,7 @@ class OverseaOrder(BasePage):
         payload = {
             'uuidList': data
         }
-        requests.post('https://faterp.szlcsc.com/pms/brokage/purchase/apply/handler', cookies=self.cookies, headers=self.header, params=payload)
+        requests.post(url=self.url + '/pms/brokage/purchase/apply/handler', cookies=self.cookies, headers=self.header, params=payload)
 
     # 下推海外代购需求单
     def notify_delivery(self):
@@ -44,7 +44,7 @@ class OverseaOrder(BasePage):
                 'currencyType': self.overseas_order.json()['result']['dataList'][i]['currencyType'],
                 'quotePrice': self.overseas_order.json()['result']['dataList'][i]['totalCostMoney']
             }
-            requests.post('https://faterp.szlcsc.com/pms/brokage/purchase/apply/add/notify/delivery', cookies=self.cookies, headers=self.header, data=payload)
+            requests.post(url=self.url + '/pms/brokage/purchase/apply/add/notify/delivery', cookies=self.cookies, headers=self.header, data=payload)
 
 
 

@@ -10,6 +10,8 @@ class BasePage:
         self.header = {
             "Content-Type": "application/x-www-form-urlencoded"
         }
+        self.url = "https://faterp.szlcsc.com"
+        self.order = "SO2303070251"
 
     # 获取yaml文件内容
     def get_yaml_data(self):

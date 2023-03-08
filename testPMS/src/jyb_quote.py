@@ -10,7 +10,7 @@ class JybQuote(BasePage):
         # 可以使用父类的所有方法、变量等
         super(JybQuote, self).__init__()
         header = {"Content-Type": "application/json"}
-        self.get_query = requests.post("https://faterp.szlcsc.com/pms/apply/star/page", params=order_data, headers= header, cookies=self.cookies)
+        self.get_query = requests.post(url=self.url + "/pms/apply/star/page", params=order_data, headers=header, cookies=self.cookies)
 
     # 需求单报价
     def save(self, quote_data):
@@ -26,7 +26,7 @@ class JybQuote(BasePage):
             self.update_yaml_data("orderNumber", order_number)
             self.update_yaml_data("productUuid", product_uuid)
             quote_data1 = self.get_yaml_data()[0]
-            r = requests.post("https://faterp.szlcsc.com/pms/vendor/quote/star/save", quote_data1, headers=self.header, cookies=self.cookies)
+            r = requests.post(url=self.url + "/pms/vendor/quote/star/save", params=quote_data1, headers=self.header, cookies=self.cookies)
             print(r.text)
 
     # 查询报价
@@ -38,7 +38,7 @@ class JybQuote(BasePage):
             aa = {
                 'purchaseApplyUuid': self.get_query.json()['result']['dataList'][i]['uuid']
             }
-            r = requests.get("https://faterp.szlcsc.com/pms/vendor/quote/query", cookies=self.cookies, params=aa)
+            r = requests.get(url=self.url + "/pms/vendor/quote/query", cookies=self.cookies, params=aa)
             vendor_quote_uuid = r.json()['result'][0]['uuid']
             data.append(vendor_quote_uuid)
         return data
@@ -53,7 +53,7 @@ class JybQuote(BasePage):
                 'uuid': self.get_query.json()['result']['dataList'][i]['uuid'],
                 'vendorQuoteUuid': data[i]
             }
-            r = requests.post("https://faterp.szlcsc.com/pms/apply/set/choose/cost/price", data=payload, cookies=self.cookies)
+            r = requests.post(url=self.url + "/pms/apply/set/choose/cost/price", data=payload, cookies=self.cookies)
             print(r.json())
             sleep(2)
 
