@@ -2,9 +2,10 @@
 import requests
 
 from testPMS.src.base_page import BasePage
+from testPMS.src.sms_order import Order
 
 
-class PurchaseOrder(BasePage):
+class PurchaseOrder(BasePage, Order):
     # 查询采购订单列表
     def __init__(self, product_code):
         super(PurchaseOrder, self).__init__()
@@ -15,6 +16,13 @@ class PurchaseOrder(BasePage):
             'currentPage': 1
         }
         self.get_purchase_order = requests.get(url=self.url + '/pms/purchase/order/page', cookies=self.cookies, params=payload)
+
+    # 打印采购订单
+    def get_purchase_order(self):
+        product = self.order_detail()
+        for i in range(len(product)):
+            purchase_order = self.get_purchase_order.json()['result']['dataList'][0]['purchaseOrderCode']
+            return purchase_order
 
     # 采购订单审核
     def purchase_order_audit(self):

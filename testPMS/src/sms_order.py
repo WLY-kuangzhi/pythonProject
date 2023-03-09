@@ -60,4 +60,4 @@ class Order(BasePage):
         payload = {
             'uuid': self.order.json()['result']['dataList'][0]['uuid']
         }
-        requests.post(url=self.url + '/sms/order/update/allow/pay', cookies=self.cookies, params=payload ,headers=self.header)
+        requests.post(url=self.url + '/sms/order/update/allow/pay', cookies=self.cookies, params=payload, headers=self.header)

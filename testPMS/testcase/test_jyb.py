@@ -83,6 +83,8 @@ class TestJybQuote(BasePage):
         self.purchase_order.purchase_order_audit()
         self.purchase_order.purchase_manager_audit()
         self.purchase_order.purchase_large_audit()
+        # 打印采购订单
+        print(self.purchase_order.get_purchase_order())
 
     # 获取采购订单号
     def test_get_purchase_order(self):
