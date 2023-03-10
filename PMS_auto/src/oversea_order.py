@@ -1,14 +1,14 @@
 # 海外代购需求单
 import requests
 
-from testPMS.src.base_page import BasePage
+from PMS_auto.src.base_page import BasePage
 
 
 class OverseaOrder(BasePage):
-    def __init__(self, oversea_order):
+    def __init__(self):
         super(OverseaOrder, self).__init__()
         payload = {
-            'orderCode': oversea_order,
+            'orderCode': self.order,
             'currentPage': 1,
             'pageSize': 30
         }
@@ -18,7 +18,6 @@ class OverseaOrder(BasePage):
     def handler_apply(self):
         data = []
         num = self.overseas_order.json()['result']['dataList']
-        i = 0
         # 获取推单状态为 自动待推单 的需求单uuid
         for i in range(len(num)):
             if self.overseas_order.json()['result']['dataList'][i]['materialStatus'] == "auto_confirmed":
@@ -26,11 +25,10 @@ class OverseaOrder(BasePage):
 
             else:
                 continue
-            i = i + 1
         payload = {
             'uuidList': data
         }
-        requests.post(url=self.url + '/pms/brokage/purchase/apply/handler', cookies=self.cookies, headers=self.header, params=payload)
+        requests.post(url=self.url + '/pms/brokage/purchase/apply/handler', cookies=self.cookies, headers=self.header_x, params=payload)
 
     # 下推海外代购需求单
     def notify_delivery(self):
@@ -44,7 +42,7 @@ class OverseaOrder(BasePage):
                 'currencyType': self.overseas_order.json()['result']['dataList'][i]['currencyType'],
                 'quotePrice': self.overseas_order.json()['result']['dataList'][i]['totalCostMoney']
             }
-            requests.post(url=self.url + '/pms/brokage/purchase/apply/add/notify/delivery', cookies=self.cookies, headers=self.header, data=payload)
+            requests.post(url=self.url + '/pms/brokage/purchase/apply/add/notify/delivery', cookies=self.cookies, headers=self.header_x, data=payload)
 
 
 

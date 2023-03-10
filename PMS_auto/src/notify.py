@@ -1,14 +1,14 @@
 # 通知单列表
 import json
 import requests
-from testPMS.src.base_page import BasePage
+from PMS_auto.src.base_page import BasePage
 
 
 class Notify(BasePage):
-    def __init__(self, sms_order):
+    def __init__(self):
         super(Notify, self).__init__()
         payload = {
-            'orderCode': sms_order,
+            'orderCode': self.order,
             'pageSize': 30,
             'currentPage': 1
         }
@@ -62,7 +62,6 @@ class Notify(BasePage):
     def push_notify(self):
         num = len(self.get_notify.json()['result']['dataList'])
         for i in range(num):
-            header = {"Content-Type": "application/json"}
             push_number = self.get_notify.json()['result']['dataList'][i]['needSendNumber']
             settle_org = self.get_notify.json()['result']['dataList'][i]['settleOrg']
             notify_uuid = self.get_notify.json()['result']['dataList'][i]['uuid']
@@ -77,7 +76,7 @@ class Notify(BasePage):
                     {"pushNumber": push_number, "settleOrg": settle_org, "uuid": notify_uuid}],
                  "originPlace": ""}]}
             payload = json.dumps(aa)
-            requests.post(url=self.url + "/pms/purchase/order/push", headers=header, data=payload,
+            requests.post(url=self.url + "/pms/purchase/order/push", headers=self.header_j, data=payload,
                           cookies=self.cookies)
 
 

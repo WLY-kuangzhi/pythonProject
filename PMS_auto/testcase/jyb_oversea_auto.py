@@ -1,8 +1,8 @@
 from time import sleep
 
-from testPMS.src.notify import Notify
-from testPMS.src.oversea_order import OverseaOrder
-from testPMS.src.purchase_order import PurchaseOrder
+from PMS_auto.src.notify import Notify
+from PMS_auto.src.oversea_order import OverseaOrder
+from PMS_auto.src.purchase_order import PurchaseOrder
 
 
 class OverseaAuto:

@@ -1,16 +1,15 @@
 # 交易部报价列表
 import requests
 from time import sleep
-from testPMS.src.base_page import BasePage
+from PMS_auto.src.base_page import BasePage
 
 
 class JybQuote(BasePage):
     # 查询需求单
-    def __init__(self, order_data):
+    def __init__(self):
         # 可以使用父类的所有方法、变量等
         super(JybQuote, self).__init__()
-        header = {"Content-Type": "application/json"}
-        self.get_query = requests.post(url=self.url + "/pms/apply/star/page", params=order_data, headers=header, cookies=self.cookies)
+        self.get_query = requests.post(url=self.url + "/pms/apply/star/page", params=self.order, headers=self.header_j, cookies=self.cookies)
 
     # 需求单报价
     def save(self, quote_data):
@@ -26,7 +25,7 @@ class JybQuote(BasePage):
             self.update_yaml_data("orderNumber", order_number)
             self.update_yaml_data("productUuid", product_uuid)
             quote_data1 = self.get_yaml_data()[0]
-            r = requests.post(url=self.url + "/pms/vendor/quote/star/save", params=quote_data1, headers=self.header, cookies=self.cookies)
+            r = requests.post(url=self.url + "/pms/vendor/quote/star/save", params=quote_data1, headers=self.header_x, cookies=self.cookies)
             print(r.text)
 
     # 查询报价

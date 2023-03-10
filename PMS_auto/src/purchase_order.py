@@ -1,17 +1,23 @@
 # 采购订单列表
+import time
+
 import requests
 
-from testPMS.src.base_page import BasePage
-from testPMS.src.sms_order import Order
+from PMS_auto.src.base_page import BasePage
 
 
-class PurchaseOrder(BasePage, Order):
+class PurchaseOrder(BasePage):
     # 查询采购订单列表
-    def __init__(self, product_code):
+    def __init__(self):
         super(PurchaseOrder, self).__init__()
         payload = {
-            'productCode': product_code,
             'vendorName': 'G7962',
+            'purchaserName': '【测试】旷志1',
+            'purchaseTimeBegin': self.C_time()['0'],
+            'purchaseTimeEnd': self.C_time()['1'],
+            'purchaseStatus': 'purchase',
+            'auditStatus': 'wait_audit',
+            'isOverseaBrokage': False,
             'pageSize': 30,
             'currentPage': 1
         }
@@ -19,10 +25,8 @@ class PurchaseOrder(BasePage, Order):
 
     # 打印采购订单
     def get_purchase_order(self):
-        product = self.order_detail()
-        for i in range(len(product)):
-            purchase_order = self.get_purchase_order.json()['result']['dataList'][0]['purchaseOrderCode']
-            return purchase_order
+            purchase_order_list = self.get_purchase_order.json()['result']['dataList'][0]['purchaseOrderCode']
+            return purchase_order_list
 
     # 采购订单审核
     def purchase_order_audit(self):

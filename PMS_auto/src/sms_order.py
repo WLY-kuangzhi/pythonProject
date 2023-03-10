@@ -1,21 +1,16 @@
-import pytest
 import requests
 
-from testPMS.src.base_page import BasePage
+from PMS_auto.src.base_page import BasePage
 
 
 # 销售订单列表
 class Order(BasePage):
-    def __init__(self, order):
+    def __init__(self):
         super(Order, self).__init__()
-    # 销售订单列表
-        header = {
-            "Content-Type": "application/json"
-        }
         payload = {
             'isPayArles': False,
             'isWaitContactOrder': False,
-            'customerAndOrderSplit': order,
+            'customerAndOrderSplit': self.order,
             'scoreLevelList': None,
             'currentPage': 1,
             'pageSize': 30,
@@ -60,4 +55,4 @@ class Order(BasePage):
         payload = {
             'uuid': self.order.json()['result']['dataList'][0]['uuid']
         }
-        requests.post(url=self.url + '/sms/order/update/allow/pay', cookies=self.cookies, params=payload, headers=self.header)
+        requests.post(url=self.url + '/sms/order/update/allow/pay', cookies=self.cookies, params=payload, headers=self.header_x)
